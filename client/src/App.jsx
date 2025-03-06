@@ -17,7 +17,6 @@ import {
   RouteSignUp,
   RouteUser,
 } from "./helpers/RouteName";
-import Index from "./pages/index";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile";
@@ -34,7 +33,7 @@ import Comments from "./pages/Comments";
 import User from "./pages/User";
 import AuthRouteProtection from "./components/AuthRouteProtection";
 import OnlyAdminAllowed from "./components/OnlyAdminAllowed";
-import Index from "./pages/index";
+import Index from './pages/Index'
 
 
 
