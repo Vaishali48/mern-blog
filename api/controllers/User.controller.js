@@ -42,7 +42,7 @@ export const updateUser = async (req, res, next) => {
           const uploadResult = await cloudinary.uploader
               .upload(
                   req.file.path,
-                  { folder: 'bhargav_blog', resource_type: 'auto' }
+                  { folder: 'vaishali_blog', resource_type: 'auto' }
               )
               .catch((error) => {
                   next(handleError(500, error.message))
@@ -63,6 +63,36 @@ export const updateUser = async (req, res, next) => {
       })
   } catch (error) {
       next(handleError(500, error.message))
+  }
+}
+
+export const getAllUser = async (req,res,next) =>{
+  try {
+    
+    const user = await User.find().sort({createdAt: -1})
+
+    res.status(200).json({
+      success: true,
+      user
+    })
+
+  } catch (error) {
+    next(handleError(500, error.message))
+  }
+}
+
+export const deleteUser = async (req,res,next) =>{
+  try {
+    const {id} = req.params
+    const user = await User.findByIdAndDelete(id)
+    
+    res.status(200).json({
+      success: true,
+      message: 'Data deleted'
+    })
+
+  } catch (error) {
+    next(handleError(500, error.message))
   }
 }
 

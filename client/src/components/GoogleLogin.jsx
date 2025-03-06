@@ -53,7 +53,7 @@ const GoogleLogin = () => {
   return (
     <Button variant="outline" className="w-full" onClick={handleLogin}>
       <FcGoogle />
-      <span> Google Login</span>
+      <span> Continue with Google</span>
     </Button>
   )
 }

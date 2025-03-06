@@ -17,21 +17,28 @@ import { FaBlog } from "react-icons/fa6";
 import { FaComment } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
-import { RouteBlog, RouteCategoryDetails } from "@/helpers/RouteName";
+import {
+  RouteBlog,
+  RouteBlogByCategory,
+  RouteCategoryDetails,
+  RouteCommentDetails,
+  RouteIndex,
+  RouteUser,
+} from "@/helpers/RouteName";
 import { useFetch } from "@/hooks/useFetch";
 import { getEnv } from "@/helpers/getEnv";
-
-
-
-
+import { useSelector } from "react-redux";
 
 function AppSidebar() {
+  const user = useSelector((state) => state.user);
 
-  const { data: categoryData } = useFetch(`${getEnv('VITE_API_BASE_URL')}/category/all-category`, {
-    method: 'get',
-    credentials: 'include'
-  })
-
+  const { data: categoryData } = useFetch(
+    `${getEnv("VITE_API_BASE_URL")}/category/all-category`,
+    {
+      method: "get",
+      credentials: "include",
+    }
+  );
 
   return (
     <Sidebar>
@@ -39,68 +46,78 @@ function AppSidebar() {
         <img src={logo} width={120}></img>
       </SidebarHeader>
       <SidebarContent className="bg-white">
-        <SidebarGroup >
+        <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton>
                 <FaHome />
-                <Link to="">Home</Link>
+                <Link to={RouteIndex}>Home</Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
 
-            <SidebarMenuItem>
-              <SidebarMenuButton>
-                <BiSolidCategory />
+            {user && user.isLoggedIn ? (
+              <>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <FaBlog />
+                    <Link to={RouteBlog}>Blog</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
 
-                <Link to={RouteCategoryDetails}>categories</Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <FaComment />
+                    <Link to={RouteCommentDetails}>Comments</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </>
+            ) : (
+              <></>
+            )}
 
-            <SidebarMenuItem>
-              <SidebarMenuButton>
-                <FaBlog />
-                <Link to={RouteBlog}>Blog</Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+            {user && user.isLoggedIn && user.user.role === "admin" ? (
+              <>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <BiSolidCategory />
 
-            <SidebarMenuItem>
-              <SidebarMenuButton>
-                <FaComment />
-                <Link to="">Comments</Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+                    <Link to={RouteCategoryDetails}>Categories</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
 
-            <SidebarMenuItem>
-              <SidebarMenuButton>
-                <FaUser />
-                <Link to="">users</Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <FaUser />
+                    <Link to={RouteUser}>Users</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </>
+            ) : (
+              <></>
+            )}
           </SidebarMenu>
         </SidebarGroup>
 
-        <SidebarGroup >
-          <SidebarGroupLabel>
-            Categories
-          </SidebarGroupLabel>
+        <SidebarGroup>
+          <SidebarGroupLabel>Categories</SidebarGroupLabel>
           <SidebarMenu>
-            {categoryData && categoryData.category.length > 0 && categoryData.category.map(category =>
-              <SidebarMenuItem key={category._id}>
-                <SidebarMenuButton>
-                  <GoDotFill />
-                  <Link to="">{category.name}</Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            )}
-
-
+            {categoryData &&
+              categoryData.category.length > 0 &&
+              categoryData.category.map((category) => (
+                <SidebarMenuItem key={category._id}>
+                  <SidebarMenuButton>
+                    <GoDotFill />
+                    <Link to={RouteBlogByCategory(category.slug)}>
+                      {category.name}
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
-
     </Sidebar>
-  )
+  );
 }
 
-export default AppSidebar
+export default AppSidebar;

@@ -1,5 +1,5 @@
 export const RouteIndex = '/';
-export const RouteSignIn = '/sign-in';
+export const RouteSignIn  = '/sign-in';
 export const RouteSignUp = '/sign-up';
 export const RouteProfile = '/profile';
 export const RouteCategoryDetails = '/categories';
@@ -30,3 +30,25 @@ export const RouteBlogDetails = (category,blog) =>{
     return `/blog/${category}/${blog}`
   }
 }
+
+export const RouteBlogByCategory = (category) =>{
+  if(!category){
+    return '/blog/:category'
+  }else{
+    return `/blog/${category}`
+  }
+}
+
+export const RouteSearch= (q) =>{
+  if(q){
+    return `/search?q=${q}`
+  }
+  else{
+    return `/search`
+  }
+    
+}
+
+export const RouteCommentDetails = '/comments'
+
+export const RouteUser = '/users'

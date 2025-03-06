@@ -46,7 +46,6 @@ const EditCategory = () => {
     }
   },[categoryName])
 
-  console.log(categoryData)
 
   useEffect(() => {
     if(categoryData){
