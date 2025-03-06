@@ -34,7 +34,7 @@ import Comments from "./pages/Comments";
 import User from "./pages/User";
 import AuthRouteProtection from "./components/AuthRouteProtection";
 import OnlyAdminAllowed from "./components/OnlyAdminAllowed";
-import Index from "./pages/Index";
+import Index from "./pages/index";
 
 
 
