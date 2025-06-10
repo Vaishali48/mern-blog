@@ -18,8 +18,11 @@ const app = express()
 app.use(cookieParser())
 app.use(express.json())
 app.use(cors({
-  origin: process.env.FRONTEND_URL, // Update this to match your client's origin
-  credentials: true
+  origin: [
+    'https://your-frontend-domain.com',
+    'http://localhost:5173' // for local development
+  ],
+  credentials: true, // if you use cookies or authentication
 }))
 
 // route setup
